@@ -30,7 +30,7 @@ class DQ<T> {
             for(let i = 0; i < this._holderArray.length; i++) {
                 if(i < this._startPointer) {
                     holderArray[newStart + this._holderArray.length - (this._endPointer - i)] = this._holderArray[i];
-                } else if (i >= this._startPointer) {
+                } else {
                     holderArray[newStart + (i - this._startPointer )] = this._holderArray[i];
                 }
             }
