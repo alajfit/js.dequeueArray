@@ -24,22 +24,23 @@ class DQ<T> {
                 this._endPointer = this._endPointer + 1
             }
         } else if (this._holderArray.length) {
-            const holderArray = new Array(this._holderArray.length * 2).fill(null)
-            let newStart = Math.floor(holderArray.length * 0.25)
+            const tempArray = new Array(this._holderArray.length * 2).fill(null)
+            let newStart = Math.floor(tempArray.length * 0.25)
 
             for(let i = 0; i < this._holderArray.length; i++) {
                 if(i < this._startPointer) {
-                    holderArray[newStart + this._holderArray.length - (this._endPointer - i)] = this._holderArray[i];
+                    const newPosition = newStart + this._holderArray.length - (this._endPointer - i)
+                    tempArray[newPosition] = this._holderArray[i]
                 } else {
-                    holderArray[newStart + (i - this._startPointer )] = this._holderArray[i];
+                    tempArray[newStart + (i - this._startPointer )] = this._holderArray[i]
                 }
             }
 
-            holderArray[newStart + this._holderArray.length] = value;
+            tempArray[newStart + this._holderArray.length] = value
 
-            this._startPointer = newStart;
-            this._endPointer = newStart + this._holderArray.length+1;
-            this._holderArray = holderArray
+            this._startPointer = newStart
+            this._endPointer = newStart + this._holderArray.length+1
+            this._holderArray = tempArray
         } else {
             this._holderArray = new Array(3).fill(null)
             this._startPointer = 1
@@ -47,7 +48,6 @@ class DQ<T> {
             this._holderArray[this._startPointer] = value
         }
         this._floatingArraySize++
-        console.log(this)
     }
 }
 
