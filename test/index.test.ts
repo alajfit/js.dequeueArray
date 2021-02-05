@@ -34,4 +34,16 @@ describe("JavaScript DequeueArray Data Structure", () => {
         dequeueArray.add('10')
         expect(dequeueArray.isEmpty()).toBe(false)
     })
+
+    it ("Should allow us to clear the DequeueArray", () => {
+        dequeueArray.add('10')
+        dequeueArray.add('20')
+        dequeueArray.add('30')
+        dequeueArray.add('40')
+        dequeueArray.add('50')
+        dequeueArray.add('60')
+        expect(dequeueArray.isEmpty()).toBe(false)
+        expect(dequeueArray.clear()).toBe(true)
+        expect(dequeueArray.isEmpty()).toBe(true)
+    })
 })

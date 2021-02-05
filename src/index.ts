@@ -57,6 +57,13 @@ class DQ<T> {
     isEmpty() {
         return this._floatingArraySize === 0
     }
+
+    clear() {
+        const tempArray = new Array(3).fill(null)
+        this.resetHolder(1, 1, tempArray);
+        this._floatingArraySize = 0
+        return true
+    }
 }
 
 export default DQ
