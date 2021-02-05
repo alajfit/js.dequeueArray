@@ -28,4 +28,10 @@ describe("JavaScript DequeueArray Data Structure", () => {
         dequeueArray.add('88')
         expect(dequeueArray.size()).toBe(7)
     })
+
+    it ("Should tell us if the DequeueArray is empty", () => {
+        expect(dequeueArray.isEmpty()).toBe(true)
+        dequeueArray.add('10')
+        expect(dequeueArray.isEmpty()).toBe(false)
+    })
 })

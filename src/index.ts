@@ -14,6 +14,23 @@ class DQ<T> {
         return this._floatingArraySize
     }
 
+    resetHolder(start, end, newArr) {
+        this._startPointer = start
+        this._endPointer = end
+        this._holderArray = newArr
+    }
+
+    copyArray(existingArr, newArr, newStart) {
+        for(let i = 0; i < existingArr.length; i++) {
+            if(i < this._startPointer) {
+                const newPosition = newStart + existingArr.length - (this._endPointer - i)
+                newArr[newPosition] = existingArr[i]
+            } else {
+                newArr[newStart + (i - this._startPointer )] = existingArr[i]
+            }
+        }
+    }
+
     add(value: T) {
         if (this._holderArray.length > this._floatingArraySize) {
             if (this._endPointer === this._holderArray.length) {
@@ -27,27 +44,18 @@ class DQ<T> {
             const tempArray = new Array(this._holderArray.length * 2).fill(null)
             let newStart = Math.floor(tempArray.length * 0.25)
 
-            for(let i = 0; i < this._holderArray.length; i++) {
-                if(i < this._startPointer) {
-                    const newPosition = newStart + this._holderArray.length - (this._endPointer - i)
-                    tempArray[newPosition] = this._holderArray[i]
-                } else {
-                    tempArray[newStart + (i - this._startPointer )] = this._holderArray[i]
-                }
-            }
-
+            this.copyArray(this._holderArray, tempArray, newStart)
             tempArray[newStart + this._holderArray.length] = value
-
-            this._startPointer = newStart
-            this._endPointer = newStart + this._holderArray.length+1
-            this._holderArray = tempArray
+            this.resetHolder(newStart, newStart + this._holderArray.length+1, tempArray)
         } else {
-            this._holderArray = new Array(3).fill(null)
-            this._startPointer = 1
-            this._endPointer = 2
+            this.resetHolder(1, 2, new Array(3).fill(null))
             this._holderArray[this._startPointer] = value
         }
         this._floatingArraySize++
+    }
+
+    isEmpty() {
+        return this._floatingArraySize === 0
     }
 }
 
